@@ -1,0 +1,7 @@
+/app
+/node_modules
+/dist
+/coverage
+/src/types/global.d.ts
+!.*.js
+/scripts/README
