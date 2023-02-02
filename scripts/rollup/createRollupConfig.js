@@ -1,7 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
+import terser from '@rollup/plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import terser  from '@rollup/plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 
 export function createRollupConfig(options, callback) {
@@ -42,6 +42,5 @@ export function createRollupConfig(options, callback) {
         }),
     ].filter(Boolean),
   };
-  console.log(config)
   return callback ? callback(config) : config;
 }

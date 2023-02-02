@@ -1,3 +1,3 @@
-export  const dummyFunction = () => {
-    return "dummy"
-}
+export * from './remoteResourceSlice';
+export * from './types';
+export * from './useRemoteResource';

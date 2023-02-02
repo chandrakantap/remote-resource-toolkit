@@ -9,10 +9,10 @@ const options = [
     format: 'cjs',
     input: pkg.source,
   },
-  { 
+  {
     name,
     format: 'esm',
-    input: pkg.source
+    input: pkg.source,
   },
   {
     name,

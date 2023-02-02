@@ -36,7 +36,7 @@
     "lint:fix": "pnpm lint --fix",
     "type": "tsc --noEmit",
     "jest-preview": "jest-preview",
-    "test": "jest --config ./scripts/jest/jest.config.js",
+    "test": "jest --config ./scripts/jest/jest.config.js --passWithNoTests",
     "test:coverage": "pnpm test -- --coverage",
     "test:watch": "pnpm test -- --onlyChanged --watch",
     "test:web": "TEST_ENV=web pnpm test",
@@ -57,6 +57,10 @@
     "typescript",
     "react-hooks"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chandrakantap/remote-resource-toolkit"
+  },
   "author": "<pal.chandrakanta@gmail.com>",
   "license": "MIT",
   "bundlewatch": {
@@ -68,9 +72,9 @@
     ]
   },
   "peerDependencies": {
-    "@reduxjs/toolkit": "^1.8.0",
     "react": "^16.8.0 || ^17 || ^18",
-    "react-redux": "^7.2.1 || ^8.0.2"
+    "react-redux": "^7.2.1 || ^8.0.2",
+    "@reduxjs/toolkit": "^1.8.0"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
