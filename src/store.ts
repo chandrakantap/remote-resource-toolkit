@@ -1,10 +1,12 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 
 import { remoteResourceReducer } from './remoteResourceSlice';
+import {remoteResourceMapReducer} from './remoteResourceMapSlice';
 
 const store = configureStore({
   reducer: {
     remoteResource: remoteResourceReducer,
+    remoteResourceMap:remoteResourceMapReducer
   },
 });
 
