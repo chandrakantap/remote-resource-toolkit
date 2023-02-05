@@ -12,15 +12,17 @@ import {
 
 export type ResourceLoaderFn<
   ResourceType,
-  Params extends ResourceParams = ResourceParams
-> = (args: {
-  params: Partial<Params>;
-  abortSignal?: AbortSignal;
-}) => Promise<{ success: boolean; data?: ResourceType; params?: Params; message?: string }>;
+  Params extends ResourceParams = ResourceParams,
+> = (args: { params: Partial<Params>; abortSignal?: AbortSignal }) => Promise<{
+  success: boolean;
+  data?: ResourceType;
+  params?: Params;
+  message?: string;
+}>;
 
 export interface UseRemoteResourceParams<
   ResourceType,
-  Params extends ResourceParams = ResourceParams
+  Params extends ResourceParams = ResourceParams,
 > {
   resourceName: string;
   resourceKey?: string;
@@ -31,16 +33,25 @@ export interface UseRemoteResourceParams<
   resourceLoader: ResourceLoaderFn<ResourceType, Params>;
 }
 
-interface ThunkParams<ResourceType, Params extends ResourceParams = ResourceParams> {
+interface ThunkParams<
+  ResourceType,
+  Params extends ResourceParams = ResourceParams,
+> {
   resourceName: string;
   resourceKey?: string;
   resourceParams: Partial<Params>;
-  resourceLoader: UseRemoteResourceParams<ResourceType, Params>['resourceLoader'];
+  resourceLoader: UseRemoteResourceParams<
+    ResourceType,
+    Params
+  >['resourceLoader'];
   abortSignal?: AbortSignal;
 }
 
-const initialLoadThunk = <ResourceType, Params extends ResourceParams = ResourceParams>(
-  params: ThunkParams<ResourceType, Params>
+const initialLoadThunk = <
+  ResourceType,
+  Params extends ResourceParams = ResourceParams,
+>(
+  params: ThunkParams<ResourceType, Params>,
 ) => {
   return async (dispatch: AppDispatch, getState: GetStateFn) => {
     const { resourceName, abortSignal } = params;
@@ -60,13 +71,23 @@ const initialLoadThunk = <ResourceType, Params extends ResourceParams = Resource
   };
 };
 
-const loadResourceThunk = <ResourceType, Params extends ResourceParams = ResourceParams>(
-  params: ThunkParams<ResourceType, Params>
+const loadResourceThunk = <
+  ResourceType,
+  Params extends ResourceParams = ResourceParams,
+>(
+  params: ThunkParams<ResourceType, Params>,
 ) => {
   return async (dispatch: AppDispatch, getState: GetStateFn) => {
-    const { resourceName, resourceParams, resourceKey, resourceLoader, abortSignal } = params;
+    const {
+      resourceName,
+      resourceParams,
+      resourceKey,
+      resourceLoader,
+      abortSignal,
+    } = params;
 
-    const resourceStatus = getState().remoteResource?.[resourceName]?.status || 'INIT';
+    const resourceStatus =
+      getState().remoteResource?.[resourceName]?.status || 'INIT';
     if (resourceStatus === 'IN_PROGRESS') {
       return;
     }
@@ -76,7 +97,12 @@ const loadResourceThunk = <ResourceType, Params extends ResourceParams = Resourc
     }
 
     try {
-      dispatch(remoteResourceActions.setStatus({ resourceName, status: 'IN_PROGRESS' }));
+      dispatch(
+        remoteResourceActions.setStatus({
+          resourceName,
+          status: 'IN_PROGRESS',
+        }),
+      );
       const { success, data, params, message } = await resourceLoader({
         params: resourceParams,
         abortSignal,
@@ -91,7 +117,12 @@ const loadResourceThunk = <ResourceType, Params extends ResourceParams = Resourc
           resourceParams: params,
           message,
         };
-        dispatch(remoteResourceActions.setState({ resourceName, resourceState: nextState }));
+        dispatch(
+          remoteResourceActions.setState({
+            resourceName,
+            resourceState: nextState,
+          }),
+        );
       }
     } catch (e) {
       dispatch(
@@ -101,7 +132,7 @@ const loadResourceThunk = <ResourceType, Params extends ResourceParams = Resourc
             status: 'ERROR',
             message: 'Some error occured during loading data.',
           },
-        })
+        }),
       );
     }
   };
@@ -109,9 +140,10 @@ const loadResourceThunk = <ResourceType, Params extends ResourceParams = Resourc
 
 const constantSelector = () => defaultRemoteResourceState;
 
-export function useRemoteResource<ResourceType, Params extends ResourceParams = ResourceParams>(
-  params: UseRemoteResourceParams<ResourceType, Params>
-) {
+export function useRemoteResource<
+  ResourceType,
+  Params extends ResourceParams = ResourceParams,
+>(params: UseRemoteResourceParams<ResourceType, Params>) {
   const {
     resourceName,
     resourceKey,
@@ -127,7 +159,8 @@ export function useRemoteResource<ResourceType, Params extends ResourceParams = 
   const slice = useAppSelector(
     disconnected
       ? constantSelector
-      : (state) => state.remoteResource?.[resourceName] || defaultRemoteResourceState
+      : (state) =>
+          state.remoteResource?.[resourceName] || defaultRemoteResourceState,
   ) as RemoteResource<ResourceType, Params>;
 
   useEffect(() => {
@@ -140,10 +173,17 @@ export function useRemoteResource<ResourceType, Params extends ResourceParams = 
           resourceParams: autoLoadParams,
           resourceLoader,
           abortSignal: abortRef.current.signal,
-        })
+        }),
       );
     }
-  }, [autoLoad, autoLoadParams, resourceName, resourceKey, dispatch, resourceLoader]);
+  }, [
+    autoLoad,
+    autoLoadParams,
+    resourceName,
+    resourceKey,
+    dispatch,
+    resourceLoader,
+  ]);
 
   useEffect(() => {
     if (autoLoad) {
@@ -163,7 +203,9 @@ export function useRemoteResource<ResourceType, Params extends ResourceParams = 
   }, [dispatch, autoRemove, resourceName]);
 
   const loadData = async (resourceParams: Partial<Params> = EMPTY_OBJECT) => {
-    dispatch(loadResourceThunk({ resourceName, resourceParams, resourceLoader }));
+    dispatch(
+      loadResourceThunk({ resourceName, resourceParams, resourceLoader }),
+    );
   };
 
   return {

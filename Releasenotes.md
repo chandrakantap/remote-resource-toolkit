@@ -5,3 +5,5 @@
  - Changed sliceName to `remoteResource` from `remoteResourceV2`
  - Fix: Caching by `ResourceKey` not working.
  - Disconnected hook feature added.
+
+## v0.0.3

@@ -1,6 +1,6 @@
 {
   "name": "@cksutils/remote-resource-toolkit",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React hooks to load and cache data in redux.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.mjs",
