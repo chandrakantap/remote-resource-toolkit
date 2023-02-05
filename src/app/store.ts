@@ -1,7 +1,10 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 
-import { remoteResourceReducer } from './remoteResourceSlice';
+import { remoteResourceReducer } from '../remoteResourceSlice';
 
+/**
+ * Solely for type infer
+ */
 const store = configureStore({
   reducer: {
     remoteResource: remoteResourceReducer,

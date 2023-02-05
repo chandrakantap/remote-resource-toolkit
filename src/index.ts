@@ -1,3 +1,3 @@
 export * from './remoteResourceSlice';
-export * from './types';
+export * from './common/types';
 export * from './useRemoteResource';

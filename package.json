@@ -1,6 +1,6 @@
 {
   "name": "@cksutils/remote-resource-toolkit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React hooks to load and cache data in redux.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.mjs",
@@ -72,8 +72,8 @@
     ]
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17 || ^18",
-    "react-redux": "^7.2.1 || ^8.0.2",
+    "react": "^16.8 || ^17.0 || ^18.0",
+    "react-redux": "^7.0 || ^8.0",
     "@reduxjs/toolkit": "^1.8.0"
   },
   "lint-staged": {
